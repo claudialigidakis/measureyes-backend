@@ -66,7 +66,18 @@ function removeAccount(account_id) {
 //Location ROUTING
 ////////////////////////////////////////////////////////////////////////////////
 function getOneLocation(account_id, location_id) {
-  return (knex('locations').where({id: location_id, account_id: account_id}).first())
+  return (knex('locations').where({id: location_id, account_id: account_id}))
+  .then(locations => {
+    const promises = locations.map(location => {
+      return knex('video')
+      .where('locations_id', location_id)
+      .then(video => {
+        location.videos = video
+        return location
+      })
+    })
+    return Promise.all(promises)
+  })
 }
 
 function getAllLocations(account_id) {
@@ -78,7 +89,6 @@ function createLocation(body, account_id) {
 }
 
 function updateLocation (location_id, address) {
-  console.log(address)
   return (knex('locations').update({address: address}).where({id: location_id}).returning('*'))
 }
 

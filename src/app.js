@@ -17,6 +17,7 @@ app.use(bodyParser.json())
 //////////////////////////////////////////////////////////////////////////////
 app.use('/auth', require('./routes/auth'))
 app.use('/accounts', require('./routes/accounts'))
+app.use('/videos', require('./routes/videos'))
 app.use('/responses', require('./routes/responses'))
 
 //////////////////////////////////////////////////////////////////////////////

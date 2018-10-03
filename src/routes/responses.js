@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 const responsesController = require('../controllers/responses')
 
-// router.get('/', accountController.getAllAccounts)
-// router.get('/:account_id', accountController.getOneAccount)
+router.get('/', responsesController.getAllResponses)
+router.get('/:response_id', responsesController.getOneResponse)
 router.post('/:video_id', responsesController.createResponse)
-// router.put('/:account_id', accountController.updateAccount)
-// router.delete('/:account_id', accountController.removeAccount)
+router.put('/:response_id', responsesController.updateResponse)
+router.delete('/:response_id', responsesController.removeResponse)
 
 module.exports = router

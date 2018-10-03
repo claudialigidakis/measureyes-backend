@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 // USER ROUTES
 //////////////////////////////////////////////////////////////////////////////
 app.use('/auth', require('./routes/auth'))
-app.use('/accounts', require('./routes/accounts')
+app.use('/accounts', require('./routes/accounts'))
 app.use('/responses', require('./routes/responses'))
 
 //////////////////////////////////////////////////////////////////////////////

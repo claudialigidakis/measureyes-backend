@@ -18,4 +18,4 @@ Back-end for https://github.com/claudialigidkis/measureyes
 https://documenter.getpostman.com/view/4516090/RWgm52AB
 
 ## ERD
-![ERD]([http://i68.tinypic.com/o6mxe9.png)
+![ERD](http://i68.tinypic.com/o6mxe9.png)

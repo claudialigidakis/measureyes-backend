@@ -12,6 +12,9 @@
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run"
   },
+  "engines": {
+    "node": "8.11.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/claudialigidakis/measureyes-backend.git"

@@ -14,5 +14,8 @@ Back-end for https://github.com/claudialigidkis/measureyes
 - `npm run knex migrate:latest`
 - `npm run knex seed:run`
 
+## Route Documentation
+https://documenter.getpostman.com/view/4516090/RWgm52AB
+
 ## ERD
-![ERD](http://i67.tinypic.com/20k7ziu.png)
+![ERD]([http://i68.tinypic.com/o6mxe9.png)

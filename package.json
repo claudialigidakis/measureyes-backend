@@ -2,7 +2,7 @@
   "name": "measureyes-backend",
   "version": "1.0.0",
   "description": "Bringing A/B testing metrics and methods from the digital world to physical environments",
-  "main": "src/app.js",
+  "main": "./src/app.js",
   "scripts": {
     "knex": "knex",
     "start": "node ./src/app.js",

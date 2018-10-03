@@ -1,8 +1,5 @@
-const authModel = require('../../models/auth')
+const authModel = require('../models/auth')
 const jwt = require('jsonwebtoken')
-// const db = require('../../../db')
-
-
 
 function login(req, res, next){
   if(!req.body.email){

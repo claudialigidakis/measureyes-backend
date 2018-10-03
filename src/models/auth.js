@@ -1,4 +1,3 @@
-// const db = require('../../../db')
 const bcrypt = require('bcrypt-as-promised')
 const accountsModel = require('./accounts')
 

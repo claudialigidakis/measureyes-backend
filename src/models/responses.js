@@ -11,20 +11,20 @@ function getAllResponses() {
 
 function createResponse(video_id, processed_data) {
   const mappedObj = processed_data.map(ele => {
-    let time = ele.ts
+    let unix_time = ele.ts
     let faces = ele.faces
     let persons = ele.persons
     return (
-      knex('responses').insert({video_id, time, faces, persons}).returning('*')
+      knex('responses').insert({video_id, unix_time, faces, persons}).returning('*')
     )
   })
   return Promise.all(mappedObj)
 }
 
-function updateResponse(response_id, time, faces, persons) {
+function updateResponse(response_id, unix_time, faces, persons) {
   const toUpdate = {}
-  time
-    ? toUpdate.time = time
+  unix_time
+    ? toUpdate.unix_time = unix_time
     : null
   faces
     ? toUpdate.faces = faces

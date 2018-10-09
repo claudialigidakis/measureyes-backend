@@ -6,7 +6,24 @@ function getAccountbyEmail(email) {
 }
 
 function getOneAccount(account_id) {
-  return (knex('accounts').where({id: account_id}).first())
+  return (knex('accounts').where('accounts.id', account_id).returning('*')).then(accounts => {
+    const promises = accounts.map(account => {
+      return knex('locations').where({account_id: account.id}).then(location => {
+        account.locations = location
+        return account
+      }).then(store => {
+        return knex('purchases_bundles')
+        .join('bundles', 'bundles.id', 'purchases_bundles.bundle_id')
+        .select('bundles.id', 'bundle_qty', 'bundles.name', 'completed', 'archived', 'steps', 'photo', 'purchases_bundles.updated_at', 'purchases_bundles.created_at', 'staff_id')
+        .where('purchases_bundles.purchase_id', purchase.id)
+        .then(bundlesList => {
+          purchase.bundles = bundlesList
+          return purchase
+        })
+      })
+    })
+    return Promise.all(promises)
+  })
 }
 
 function getAllAccounts() {
@@ -26,7 +43,7 @@ function createAccount(body) {
       }
     return bcrypt.hash(body.password, 10)
   }).then(newPassword => {
-    return(knex('accounts').insert({store_name, first_name, last_name, email, password: newPassword}).returning('*'))
+    return (knex('accounts').insert({store_name, first_name, last_name, email, password: newPassword}).returning('*'))
   })
 }
 
@@ -66,12 +83,9 @@ function removeAccount(account_id) {
 //Location ROUTING
 ////////////////////////////////////////////////////////////////////////////////
 function getOneLocation(account_id, location_id) {
-  return (knex('locations').where({id: location_id, account_id: account_id}))
-  .then(locations => {
+  return (knex('locations').where({id: location_id, account_id: account_id})).then(locations => {
     const promises = locations.map(location => {
-      return knex('video')
-      .where('locations_id', location_id)
-      .then(video => {
+      return knex('video').where('locations_id', location_id).then(video => {
         location.videos = video
         return location
       })
@@ -88,7 +102,7 @@ function createLocation(body, account_id) {
   return (knex('locations').insert({account_id: account_id, address: body.address}).returning('*'))
 }
 
-function updateLocation (location_id, address) {
+function updateLocation(location_id, address) {
   return (knex('locations').update({address: address}).where({id: location_id}).returning('*'))
 }
 

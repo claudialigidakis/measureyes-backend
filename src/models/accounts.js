@@ -8,18 +8,17 @@ function getAccountbyEmail(email) {
 function getOneAccount(account_id) {
   return (knex('accounts').where('accounts.id', account_id).returning('*')).then(accounts => {
     const promises = accounts.map(account => {
-      return knex('locations').where({account_id: account.id}).then(location => {
+      return knex('locations').where({account_id: account.id}).returning('*').then(location => {
         account.locations = location
         return account
-      }).then(store => {
-        return knex('purchases_bundles')
-        .join('bundles', 'bundles.id', 'purchases_bundles.bundle_id')
-        .select('bundles.id', 'bundle_qty', 'bundles.name', 'completed', 'archived', 'steps', 'photo', 'purchases_bundles.updated_at', 'purchases_bundles.created_at', 'staff_id')
-        .where('purchases_bundles.purchase_id', purchase.id)
-        .then(bundlesList => {
-          purchase.bundles = bundlesList
-          return purchase
+      }).then(store_location => {
+        const videoPromise = store_location.locations.map(store => {
+          return knex('video').where('video.locations_id', store.id).then(video => {
+            store.videos = video
+            return store
+          })
         })
+        return Promise.all(videoPromise)
       })
     })
     return Promise.all(promises)
